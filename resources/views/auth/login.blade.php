@@ -1,0 +1,37 @@
+@extends('layouts.auth')
+
+@section('title', 'Sign in')
+
+@section('content')
+<h1>Sign in</h1>
+<p>Log in to buy tickets and view your dashboard.</p>
+
+@if ($errors->any())
+    <div class="error">{{ $errors->first() }}</div>
+@endif
+
+<form method="post" action="{{ route('login') }}">
+    @csrf
+    @if ($redirect)
+        <input type="hidden" name="redirect" value="{{ $redirect }}" />
+    @endif
+
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus />
+
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" required />
+
+    <label class="check">
+        <input type="checkbox" name="remember" value="1" />
+        Remember me
+    </label>
+
+    <button class="btn" type="submit">Sign in</button>
+</form>
+
+<div class="row">
+    <a class="link" href="{{ route('register', $redirect ? ['redirect' => $redirect] : []) }}">Create account</a>
+    <a class="link" href="/">Back to site</a>
+</div>
+@endsection

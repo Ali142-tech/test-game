@@ -1,0 +1,26 @@
+<?php
+
+return [
+    ['year' => 2022, 'winner' => 'Argentina'],
+    ['year' => 2018, 'winner' => 'France'],
+    ['year' => 2014, 'winner' => 'Germany'],
+    ['year' => 2010, 'winner' => 'Spain'],
+    ['year' => 2006, 'winner' => 'Italy'],
+    ['year' => 2002, 'winner' => 'Brazil'],
+    ['year' => 1998, 'winner' => 'France'],
+    ['year' => 1994, 'winner' => 'Brazil'],
+    ['year' => 1990, 'winner' => 'West Germany'],
+    ['year' => 1986, 'winner' => 'Argentina'],
+    ['year' => 1982, 'winner' => 'Italy'],
+    ['year' => 1978, 'winner' => 'Argentina'],
+    ['year' => 1974, 'winner' => 'West Germany'],
+    ['year' => 1970, 'winner' => 'Brazil'],
+    ['year' => 1966, 'winner' => 'England'],
+    ['year' => 1962, 'winner' => 'Brazil'],
+    ['year' => 1958, 'winner' => 'Brazil'],
+    ['year' => 1954, 'winner' => 'West Germany'],
+    ['year' => 1950, 'winner' => 'Uruguay'],
+    ['year' => 1938, 'winner' => 'Italy'],
+    ['year' => 1934, 'winner' => 'Italy'],
+    ['year' => 1930, 'winner' => 'Uruguay'],
+];
