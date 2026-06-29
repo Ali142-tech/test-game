@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Http\Middleware\TrustProxies as Middleware;
+use Illuminate\Http\Request;
+
+class TrustProxies extends Middleware
+{
+    /**
+     * The trusted proxies for this application.
+     *
+     * Set to '*' to trust all proxies, which is required when running
+     * behind Railway's proxy layer where the originating IP is unknown.
+     *
+     * @var array<int, string>|string|null
+     */
+    protected $proxies = '*';
+
+    /**
+     * The headers that should be used to detect proxies.
+     *
+     * Trusting X-Forwarded-For, X-Forwarded-Host, and X-Forwarded-Proto
+     * ensures Laravel correctly detects the client IP and HTTPS scheme
+     * when running behind Railway's reverse proxy.
+     *
+     * @var int
+     */
+    protected $headers =
+        Request::HEADER_X_FORWARDED_FOR |
+        Request::HEADER_X_FORWARDED_HOST |
+        Request::HEADER_X_FORWARDED_PORT |
+        Request::HEADER_X_FORWARDED_PROTO |
+        Request::HEADER_X_FORWARDED_PREFIX;
+}
