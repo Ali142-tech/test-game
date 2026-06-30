@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('world_cup_matches', function (Blueprint $table) {
-            $table->unsignedInteger('tickets_available')->nullable()->after('price_from');
+            $table->unsignedInteger('tickets_available')->nullable();
         });
     }
 
