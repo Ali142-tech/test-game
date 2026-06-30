@@ -22,7 +22,7 @@
         $toasts->push(['type' => 'warning', 'title' => 'Warning', 'message' => session('warning')]);
     }
 
-    if (isset($errors) && $errors->any()) {
+    if (isset($errors) && $errors->any() && ! request()->is('login', 'register')) {
         $toasts->push([
             'type' => 'error',
             'title' => 'Please check your details',

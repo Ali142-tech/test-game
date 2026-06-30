@@ -1,45 +1,60 @@
 @extends('layouts.auth')
 
 @section('title', 'Create account')
-
-@section('showcase')
-    <span class="auth-showcase__tag">GoalPass · FIFA World Cup 2026</span>
-    <h1>Join GoalPass</h1>
-    <p>Create your account in seconds and start booking World Cup match tickets across USA, Canada &amp; Mexico.</p>
-    <ul class="auth-showcase__list">
-        <li><span>⚽</span> Full schedule &amp; host city matches</li>
-        <li><span>💳</span> Fast checkout with Stripe</li>
-        <li><span>✓</span> Verified ticket marketplace</li>
-    </ul>
-    <div class="auth-showcase__art">World Cup<br>2026</div>
-@endsection
+@section('wrap_class', 'auth-wrap--register')
+@section('card_class', 'auth-card--wide')
 
 @section('content')
-    <h2>Create account</h2>
-    <p class="auth-card__lead">Register to purchase tickets and access your personal wallet.</p>
+    <div class="auth-card__eyebrow">Join GoalPass</div>
+    <h1>Create account</h1>
+    <p class="auth-card__lead">Register once, then buy and manage World Cup 2026 tickets anytime.</p>
 
-    <form method="post" action="{{ route('register') }}">
+    <nav class="auth-tabs" aria-label="Account type">
+        <a href="{{ route('login', request()->only('redirect')) }}">Sign in</a>
+        <a href="{{ route('register', request()->only('redirect')) }}" class="is-active">Create account</a>
+    </nav>
+
+    <form method="post" action="{{ route('register') }}" novalidate data-auth-validate="register">
         @csrf
         @if ($redirect)
             <input type="hidden" name="redirect" value="{{ $redirect }}" />
         @endif
 
-        <label for="name">Full name</label>
-        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
+        <div class="auth-field @error('name') has-error @enderror">
+            <label for="name">Full name</label>
+            <input
+                id="name"
+                type="text"
+                name="name"
+                value="{{ old('name') }}"
+                autofocus
+                autocomplete="name"
+                placeholder="Your name"
+                @error('name') aria-invalid="true" @enderror
+            />
+            <x-auth-error field="name" />
+        </div>
 
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" />
+        <div class="auth-field @error('email') has-error @enderror">
+            <label for="email">Email</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                autocomplete="email"
+                placeholder="you@email.com"
+                @error('email') aria-invalid="true" @enderror
+            />
+            <x-auth-error field="email" />
+        </div>
 
         <x-phone-input :countries="$countries" :selected-country="old('phone_country', 'US')" />
 
-        <x-password-input id="password" name="password" label="Password" required autocomplete="new-password" />
-        <x-password-input id="password_confirmation" name="password_confirmation" label="Confirm password" required autocomplete="new-password" />
+        <x-password-input id="password" name="password" label="Password" autocomplete="new-password" placeholder="Min. 8 characters" />
+        <x-password-input id="password_confirmation" name="password_confirmation" label="Confirm password" autocomplete="new-password" placeholder="Repeat password" />
 
-        <button class="btn" type="submit">Create account</button>
+        <button class="auth-btn" type="submit">Create account</button>
+        <p class="auth-trust">🛡 Every ticket protected on GoalPass</p>
     </form>
-
-    <div class="row">
-        <a class="link" href="{{ route('login', $redirect ? ['redirect' => $redirect] : []) }}">Already have an account?</a>
-        <a class="link" href="/">← Back to homepage</a>
-    </div>
 @endsection

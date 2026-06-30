@@ -2,17 +2,16 @@
     'id',
     'name',
     'label',
-    'required' => false,
 ])
 
-<div class="password-field">
+<div class="password-field @error($name) has-error @enderror">
     <label for="{{ $id }}">{{ $label }}</label>
     <div class="password-field__wrap">
         <input
             id="{{ $id }}"
             type="password"
             name="{{ $name }}"
-            @if ($required) required @endif
+            @error($name) aria-invalid="true" @enderror
             {{ $attributes }}
         />
         <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password">
@@ -28,6 +27,7 @@
             </svg>
         </button>
     </div>
+    <x-auth-error :field="$name" />
 </div>
 
 @once

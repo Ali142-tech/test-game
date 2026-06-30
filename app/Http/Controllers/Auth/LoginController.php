@@ -20,14 +20,18 @@ class LoginController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validate(
+            [
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => ['required', 'string'],
+            ],
+            __('auth.validation'),
+            __('auth.attributes')
+        );
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()
-                ->withErrors(['email' => 'The email or password you entered is incorrect.'])
+                ->withErrors(['email' => __('auth.login.failed')])
                 ->onlyInput('email');
         }
 
@@ -37,7 +41,7 @@ class LoginController extends Controller
             Auth::logout();
 
             return back()
-                ->withErrors(['email' => 'Admin accounts must sign in from the admin login page.'])
+                ->withErrors(['email' => __('auth.login.admin_only')])
                 ->onlyInput('email');
         }
 
