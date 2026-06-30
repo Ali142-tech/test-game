@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Notify;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class RegisterController extends Controller
         $country = $countries->firstWhere('code', $data['phone_country']);
         if (! $country || $country['dial'] !== $data['phone_dial_code']) {
             return back()
-                ->withErrors(['phone_country' => 'Please select a valid country code.'])
+                ->withErrors(['phone_country' => 'Please choose a valid country code from the list.'])
                 ->withInput();
         }
 
@@ -58,6 +59,8 @@ class RegisterController extends Controller
 
         $redirect = $request->input('redirect');
 
-        return redirect()->to($redirect ?: route('dashboard'));
+        return redirect()
+            ->to($redirect ?: route('dashboard'))
+            ->with(Notify::success('Your GoalPass account is ready. Start browsing World Cup matches!', 'Welcome aboard'));
     }
 }

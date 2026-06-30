@@ -6,10 +6,6 @@
 <h1>Admin login</h1>
 <p>Manage World Cup matches and ticket prices.</p>
 
-@if ($errors->any())
-    <div class="error">{{ $errors->first() }}</div>
-@endif
-
 <form method="post" action="{{ route('admin.login') }}">
     @csrf
 

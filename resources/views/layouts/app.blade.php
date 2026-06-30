@@ -9,6 +9,7 @@
     @stack('styles')
 </head>
 <body>
+    @include('partials.toasts')
     @yield('content')
     @stack('scripts')
 </body>

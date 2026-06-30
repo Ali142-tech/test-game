@@ -65,10 +65,6 @@
 
     <div class="checkout-body">
         <div class="checkout-shell">
-            @if (session('error'))
-                <div class="checkout-alert">{{ session('error') }}</div>
-            @endif
-
             <div class="checkout-grid">
                 <div class="checkout-panel">
                     <div class="checkout-panel__head">Order summary</div>

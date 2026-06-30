@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TicketOrder;
 use App\Models\WorldCupMatch;
 use App\Services\StripeCheckoutFulfillment;
+use App\Support\Notify;
 use App\Support\TeamFlag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,11 +22,11 @@ class CheckoutController extends Controller
         }
 
         if (! $worldCupMatch->price_from) {
-            return back()->with('error', 'Tickets are not available for this match yet.');
+            return back()->with(Notify::warning('Ticket sales for this match have not opened yet.', 'Not available'));
         }
 
         if ($worldCupMatch->isSoldOut()) {
-            return back()->with('error', 'This match is sold out.');
+            return back()->with(Notify::warning('This match is sold out. Check other fixtures on the schedule.', 'Sold out'));
         }
 
         return view('checkout.show', [
@@ -60,7 +61,7 @@ class CheckoutController extends Controller
         ]);
 
         if (! $worldCupMatch->hasAvailability($data['quantity'])) {
-            return back()->with('error', 'Not enough tickets available for this match.');
+            return back()->with(Notify::warning('Not enough tickets left for that quantity. Please choose fewer tickets.', 'Limited availability'));
         }
 
         $amountCents = $worldCupMatch->priceInCents() * $data['quantity'];
@@ -81,7 +82,9 @@ class CheckoutController extends Controller
                 'payment_reference' => 'demo-'.uniqid(),
             ]);
 
-            return redirect()->route('dashboard')->with('status', 'Demo payment completed. Ticket saved to your dashboard.');
+            return redirect()
+                ->route('dashboard')
+                ->with(Notify::success('Demo payment complete — your tickets are in your wallet.', 'Tickets booked'));
         }
 
         Stripe::setApiKey($stripeSecret);
@@ -136,6 +139,8 @@ class CheckoutController extends Controller
             $fulfillment->fulfillFromSession($session);
         }
 
-        return redirect()->route('dashboard')->with('status', 'Payment received. Your tickets are in your dashboard.');
+        return redirect()
+            ->route('dashboard')
+            ->with(Notify::success('Payment successful! Your World Cup tickets are ready in your wallet.', 'Tickets booked'));
     }
 }

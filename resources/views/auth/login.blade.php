@@ -6,10 +6,6 @@
 <h1>Sign in</h1>
 <p>Log in to buy tickets and view your dashboard.</p>
 
-@if ($errors->any())
-    <div class="error">{{ $errors->first() }}</div>
-@endif
-
 <form method="post" action="{{ route('login') }}">
     @csrf
     @if ($redirect)

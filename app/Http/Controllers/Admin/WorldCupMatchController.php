@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\WorldCupMatch;
+use App\Support\Notify;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -32,7 +33,9 @@ class WorldCupMatchController extends Controller
     {
         WorldCupMatch::create($this->validated($request));
 
-        return redirect()->route('admin.matches.index')->with('status', 'Match created.');
+        return redirect()
+            ->route('admin.matches.index')
+            ->with(Notify::success('The match is now live on the public schedule.', 'Match added'));
     }
 
     public function edit(WorldCupMatch $worldCupMatch): View
@@ -47,14 +50,18 @@ class WorldCupMatchController extends Controller
     {
         $worldCupMatch->update($this->validated($request));
 
-        return redirect()->route('admin.matches.index')->with('status', 'Match updated.');
+        return redirect()
+            ->route('admin.matches.index')
+            ->with(Notify::success('Match details and pricing have been saved.', 'Match updated'));
     }
 
     public function destroy(WorldCupMatch $worldCupMatch): RedirectResponse
     {
         $worldCupMatch->delete();
 
-        return redirect()->route('admin.matches.index')->with('status', 'Match deleted.');
+        return redirect()
+            ->route('admin.matches.index')
+            ->with(Notify::info('The match has been removed from the schedule.', 'Match deleted'));
     }
 
     private function validated(Request $request): array

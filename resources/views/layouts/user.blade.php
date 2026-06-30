@@ -137,6 +137,7 @@
     </style>
 </head>
 <body>
+    @include('partials.toasts')
     <div class="user-shell">
         <aside class="user-sidebar">
             <div class="user-brand">
@@ -168,9 +169,6 @@
 
         <div class="user-main @yield('main_class')">
             @include('partials.theme-topbar')
-            @if (session('status'))
-                <div class="flash">{{ session('status') }}</div>
-            @endif
             @yield('content')
         </div>
     </div>

@@ -6,10 +6,6 @@
 <h1>Create account</h1>
 <p>Register to purchase World Cup tickets.</p>
 
-@if ($errors->any())
-    <div class="error">{{ $errors->first() }}</div>
-@endif
-
 <form method="post" action="{{ route('register') }}">
     @csrf
     @if ($redirect)

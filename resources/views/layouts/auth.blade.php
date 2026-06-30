@@ -64,6 +64,7 @@
     </style>
 </head>
 <body>
+    @include('partials.toasts')
     <div class="auth-wrap">
         <div class="auth-card">
             @yield('content')
