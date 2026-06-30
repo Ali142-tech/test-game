@@ -189,9 +189,9 @@ img { display: block; max-width: 100%; }
 .match-card__title { display: block; font-size: 20px; line-height: 1.2; margin-bottom: 6px; }
 .match-card__venue { display: block; color: var(--muted); font-size: 14px; }
 .match-card__btn {
-    display: inline-flex; align-items: center; justify-content: center; min-width: 130px;
-    padding: 12px 18px; border-radius: 999px; background: #181818; color: #fff;
-    font-weight: 800; font-size: 15px; white-space: nowrap;
+    display: inline-flex; align-items: center; justify-content: center; min-width: 100px;
+    padding: 12px 22px; border-radius: 999px; background: #181818; color: #fff;
+    font-weight: 800; font-size: 15px; white-space: nowrap; letter-spacing: .02em;
 }
 .match-card__btn:hover { background: #333; }
 .match-card__btn--disabled { background: #d0d0d0; color: #666; pointer-events: none; }

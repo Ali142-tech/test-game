@@ -89,7 +89,10 @@ class CheckoutController extends Controller
         $session = Session::create([
             'mode' => 'payment',
             'customer_email' => $request->user()->email,
-            'success_url' => route('checkout.success', ['order' => $order->id]).'?session_id={CHECKOUT_SESSION_ID}',
+            'success_url' => route('checkout.success', [
+                'order' => $order->id,
+                'session_id' => '{CHECKOUT_SESSION_ID}',
+            ]),
             'cancel_url' => route('checkout.show', $worldCupMatch),
             'line_items' => [[
                 'quantity' => 1,
@@ -114,7 +117,9 @@ class CheckoutController extends Controller
 
     public function success(Request $request, StripeCheckoutFulfillment $fulfillment): RedirectResponse
     {
-        $order = TicketOrder::where('id', $request->query('order'))
+        $orderId = (int) $request->query('order');
+
+        $order = TicketOrder::where('id', $orderId)
             ->where('user_id', $request->user()->id)
             ->firstOrFail();
 

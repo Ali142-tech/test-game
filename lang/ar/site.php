@@ -67,6 +67,8 @@ return [
     'match' => [
         'sold_out' => 'نفدت',
         'from_price' => 'من $:price',
+        'pay' => 'ادفع',
+        'pay_from' => 'ادفع · من $:price',
         'tba' => 'لاحقًا',
     ],
 

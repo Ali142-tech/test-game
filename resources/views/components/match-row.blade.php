@@ -30,7 +30,7 @@
         @if ($match->isSoldOut())
             <span class="match-card__btn match-card__btn--disabled">{{ __('site.match.sold_out') }}</span>
         @elseif ($match->price_from)
-            <a href="{{ $href }}" class="match-card__btn">{{ __('site.match.from_price', ['price' => number_format($match->price_from)]) }}</a>
+            <a href="{{ $href }}" class="match-card__btn">{{ __('site.match.pay') }}</a>
         @else
             <span class="match-card__btn match-card__btn--disabled">{{ __('site.match.tba') }}</span>
         @endif
