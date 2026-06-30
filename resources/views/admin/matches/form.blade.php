@@ -81,7 +81,8 @@
             </div>
             <div class="field">
                 <label for="match_time">Time</label>
-                <input id="match_time" name="match_time" value="{{ old('match_time', $match->match_time) }}" placeholder="12:00pm" required />
+                <input id="match_time" type="time" name="match_time" value="{{ $matchTimeInput }}" required />
+                @error('match_time')<div style="color:#dc2626;font-size:13px;">{{ $message }}</div>@enderror
             </div>
         </div>
 
@@ -139,7 +140,7 @@
         @endif
 
         <div class="actions">
-            <button type="submit" class="btn">{{ $match->exists ? 'Save changes' : 'Create match' }}</button>
+            <button type="submit" class="btn" data-loading-text="{{ $match->exists ? 'Saving changes...' : 'Creating match...' }}">{{ $match->exists ? 'Save changes' : 'Create match' }}</button>
             <a href="{{ route('admin.matches.index') }}" class="btn btn--ghost">Cancel</a>
         </div>
     </form>

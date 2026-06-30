@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\WorldCupMatch;
 use App\Support\Notify;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -25,6 +26,7 @@ class WorldCupMatchController extends Controller
     {
         return view('admin.matches.form', [
             'match' => new WorldCupMatch,
+            'matchTimeInput' => $this->matchTimeForInput(old('match_time')),
             ...$this->formOptions(),
         ]);
     }
@@ -42,6 +44,7 @@ class WorldCupMatchController extends Controller
     {
         return view('admin.matches.form', [
             'match' => $worldCupMatch,
+            'matchTimeInput' => $this->matchTimeForInput(old('match_time', $worldCupMatch->match_time)),
             ...$this->formOptions(),
         ]);
     }
@@ -66,12 +69,12 @@ class WorldCupMatchController extends Controller
 
     private function validated(Request $request): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'stage' => ['required', 'string', 'max:120'],
             'home_team' => ['required', 'string', 'max:120', 'different:away_team'],
             'away_team' => ['required', 'string', 'max:120', 'different:home_team'],
             'match_date' => ['required', 'date'],
-            'match_time' => ['required', 'string', 'max:20'],
+            'match_time' => ['required', 'date_format:H:i'],
             'city' => ['required', 'string', 'max:160'],
             'venue' => ['required', 'string', 'max:160'],
             'price_from' => ['nullable', 'integer', 'min:0'],
@@ -82,6 +85,29 @@ class WorldCupMatchController extends Controller
             'is_published' => $request->boolean('is_published'),
             'sort_order' => $request->input('sort_order', 0),
         ];
+
+        $data['match_time'] = Carbon::createFromFormat('H:i', $data['match_time'])->format('g:ia');
+
+        return $data;
+    }
+
+    private function matchTimeForInput(?string $time): string
+    {
+        if (! $time) {
+            return '';
+        }
+
+        if (preg_match('/^\d{2}:\d{2}$/', $time)) {
+            return $time;
+        }
+
+        $normalized = strtolower(str_replace(' ', '', $time));
+
+        try {
+            return Carbon::createFromFormat('g:ia', $normalized)->format('H:i');
+        } catch (\Throwable) {
+            return '';
+        }
     }
 
     private function formOptions(): array

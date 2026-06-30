@@ -40,7 +40,7 @@
             Remember me
         </label>
 
-        <button class="auth-btn" type="submit">Sign in</button>
+        <button class="auth-btn" type="submit" data-loading-text="Signing in...">Sign in</button>
         <p class="auth-trust">🔒 Secure login · Stripe checkout on ticket purchases</p>
     </form>
 @endsection

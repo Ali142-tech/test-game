@@ -201,6 +201,17 @@
         .progress span { display: block; height: 100%; background: linear-gradient(90deg, #2563eb, #059669); border-radius: 999px; }
         label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
         input, select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px; font: inherit; background: #fff; }
+        input[type="date"], input[type="time"] {
+            min-height: 44px;
+            cursor: pointer;
+            color-scheme: light;
+        }
+        html[data-theme="dark"] input[type="date"],
+        html[data-theme="dark"] input[type="time"] {
+            color-scheme: dark;
+            background: #111827;
+            color: #f3f4f6;
+        }
         select { cursor: pointer; }
         .field { margin-bottom: 14px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -254,7 +265,7 @@
                 <a href="/" target="_blank">View public site</a>
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit">Logout</button>
+                    <button type="submit" data-loading-text="Signing out...">Logout</button>
                 </form>
             </div>
         </aside>
@@ -264,5 +275,6 @@
             @yield('content')
         </div>
     </div>
+    @include('partials.submit-loader')
 </body>
 </html>

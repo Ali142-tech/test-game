@@ -22,7 +22,7 @@
             Remember me
         </label>
 
-        <button class="auth-btn" type="submit">Sign in to admin</button>
+        <button class="auth-btn" type="submit" data-loading-text="Signing in...">Sign in to admin</button>
     </form>
 
     <p class="auth-trust" style="margin-top:20px">

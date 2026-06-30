@@ -132,7 +132,7 @@
                                 @endfor
                             </div>
 
-                            <button class="checkout-pay-btn" type="submit" id="pay-btn">
+                            <button class="checkout-pay-btn" type="submit" id="pay-btn" data-loading-text="Redirecting to payment...">
                                 Continue to secure payment
                             </button>
 

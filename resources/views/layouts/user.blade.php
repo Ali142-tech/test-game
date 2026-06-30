@@ -162,7 +162,7 @@
                 <a href="/">Back to homepage</a>
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit">Sign out</button>
+                    <button type="submit" data-loading-text="Signing out...">Sign out</button>
                 </form>
             </div>
         </aside>
@@ -172,5 +172,6 @@
             @yield('content')
         </div>
     </div>
+    @include('partials.submit-loader')
 </body>
 </html>

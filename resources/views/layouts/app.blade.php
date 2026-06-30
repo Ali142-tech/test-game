@@ -12,5 +12,6 @@
     @include('partials.toasts')
     @yield('content')
     @stack('scripts')
+    @include('partials.submit-loader')
 </body>
 </html>

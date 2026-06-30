@@ -34,5 +34,6 @@
 
     @include('partials.auth-validation')
     @stack('scripts')
+    @include('partials.submit-loader')
 </body>
 </html>

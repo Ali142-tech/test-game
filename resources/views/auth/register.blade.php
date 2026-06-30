@@ -54,7 +54,7 @@
         <x-password-input id="password" name="password" label="Password" autocomplete="new-password" placeholder="Min. 8 characters" />
         <x-password-input id="password_confirmation" name="password_confirmation" label="Confirm password" autocomplete="new-password" placeholder="Repeat password" />
 
-        <button class="auth-btn" type="submit">Create account</button>
+        <button class="auth-btn" type="submit" data-loading-text="Creating account...">Create account</button>
         <p class="auth-trust">🛡 Every ticket protected on GoalPass</p>
     </form>
 @endsection
