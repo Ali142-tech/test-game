@@ -16,8 +16,7 @@
     <label for="email">Admin email</label>
     <input id="email" type="email" name="email" value="{{ old('email', 'admin@goalpass.local') }}" required autofocus />
 
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password" required />
+    <x-password-input id="password" name="password" label="Password" required />
 
     <label class="check">
         <input type="checkbox" name="remember" value="1" />

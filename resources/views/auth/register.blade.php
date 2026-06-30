@@ -24,11 +24,8 @@
 
     <x-phone-input :countries="$countries" :selected-country="old('phone_country', 'US')" />
 
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password" required />
-
-    <label for="password_confirmation">Confirm password</label>
-    <input id="password_confirmation" type="password" name="password_confirmation" required />
+    <x-password-input id="password" name="password" label="Password" required />
+    <x-password-input id="password_confirmation" name="password_confirmation" label="Confirm password" required />
 
     <button class="btn" type="submit">Create account</button>
 </form>

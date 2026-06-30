@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TicketOrder;
 use App\Models\WorldCupMatch;
 use App\Services\StripeCheckoutFulfillment;
+use App\Support\TeamFlag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -30,7 +31,20 @@ class CheckoutController extends Controller
         return view('checkout.show', [
             'match' => $worldCupMatch,
             'maxQuantity' => min(10, $worldCupMatch->ticketsRemaining() ?? 10),
+            'homeFlag' => $this->teamFlagUrl($worldCupMatch->home_team),
+            'awayFlag' => $this->teamFlagUrl($worldCupMatch->away_team),
         ]);
+    }
+
+    private function teamFlagUrl(string $teamName): ?string
+    {
+        static $teamCodes = null;
+
+        $teamCodes ??= collect(require resource_path('data/teams.php'))->pluck('code', 'name');
+
+        $code = $teamCodes->get($teamName);
+
+        return $code ? TeamFlag::url($code) : null;
     }
 
     public function pay(Request $request, WorldCupMatch $worldCupMatch): RedirectResponse

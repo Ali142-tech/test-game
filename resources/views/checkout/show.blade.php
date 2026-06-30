@@ -1,65 +1,202 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkout — {{ $match->matchupTitle() }}</title>
-    @include('partials.site-styles')
-    <style>
-        .checkout { max-width: 720px; margin: 40px auto; padding: 0 24px; }
-        .checkout-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 18px; padding: 24px; }
-        .checkout h1 { margin: 0 0 8px; font-size: 28px; }
-        .checkout p { color: #676767; }
-        .checkout-meta { margin: 18px 0; line-height: 1.7; }
-        .checkout-meta strong { display: block; font-size: 18px; }
-        label { display: block; font-weight: 700; margin: 16px 0 8px; }
-        select, input { width: 100%; padding: 12px; border: 1px solid #e8e8e8; border-radius: 12px; font: inherit; }
-        .pay-btn { margin-top: 20px; width: 100%; border: 0; border-radius: 999px; padding: 14px; background: #181818; color: #fff; font-weight: 800; font-size: 16px; cursor: pointer; }
-        .top-links { display: flex; gap: 16px; margin-bottom: 20px; font-size: 14px; }
-        .top-links a { color: #0b5fff; }
-    </style>
-</head>
-<body>
-    <div class="checkout">
-        <div class="top-links">
-            <a href="/">← Back to matches</a>
-            <a href="{{ route('dashboard') }}">My dashboard</a>
-        </div>
+@extends('layouts.app')
 
-        <div class="checkout-card">
-            <p>{{ $match->stageLabel() }}</p>
-            <h1>{{ $match->matchupTitle() }}</h1>
-            <div class="checkout-meta">
-                <span>{{ $match->formattedDayTime() }}</span><br>
-                <span>{{ $match->locationLine() }}</span>
+@section('title', 'Checkout — '.$match->matchupTitle())
+
+@php
+    $genericFlag = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%234a5568'/%3E%3C/svg%3E";
+    $stageLower = strtolower($match->stage);
+    $heroClass = 'checkout-page__hero';
+    if (str_contains($stageLower, 'final')) {
+        $heroClass .= ' checkout-page__hero--final';
+    } elseif (str_contains($stageLower, 'semi') || str_contains($stageLower, 'quarter') || str_contains($stageLower, 'round of')) {
+        $heroClass .= ' checkout-page__hero--knockout';
+    }
+    $unitPrice = (int) $match->price_from;
+@endphp
+
+@push('styles')
+    @include('partials.checkout-styles')
+@endpush
+
+@section('content')
+<div class="checkout-page">
+    <header class="{{ $heroClass }}">
+        <div class="checkout-shell">
+            <nav class="checkout-nav">
+                <a href="/" class="checkout-nav__brand">GOALPASS</a>
+                <div style="display:flex;gap:16px;">
+                    <a href="/#schedule">← Matches</a>
+                    <a href="{{ route('dashboard') }}">My tickets</a>
+                </div>
+            </nav>
+
+            <span class="checkout-stage">🏆 {{ $match->stageLabel() }}</span>
+
+            <div class="checkout-matchup">
+                <div class="checkout-team">
+                    <div class="checkout-team__flag">
+                        <img src="{{ $homeFlag ?? $genericFlag }}" alt="" />
+                    </div>
+                    <div class="checkout-team__name">{{ $match->home_team }}</div>
+                </div>
+                <div class="checkout-vs">VS</div>
+                <div class="checkout-team">
+                    <div class="checkout-team__flag">
+                        <img src="{{ $awayFlag ?? $genericFlag }}" alt="" />
+                    </div>
+                    <div class="checkout-team__name">{{ $match->away_team }}</div>
+                </div>
             </div>
 
-            <form method="post" action="{{ route('checkout.pay', $match) }}">
-                @csrf
-                <label for="quantity">Number of tickets</label>
-                <select id="quantity" name="quantity">
-                    @for ($i = 1; $i <= $maxQuantity; $i++)
-                        <option value="{{ $i }}">{{ $i }} ticket{{ $i > 1 ? 's' : '' }} — ${{ number_format($match->price_from * $i) }}</option>
-                    @endfor
-                </select>
+            <div class="checkout-venue-card">
+                <h1>{{ $match->venue }}</h1>
+                <p>{{ $match->city }} · FIFA World Cup 2026</p>
+                <div class="checkout-details">
+                    <span class="checkout-detail"><span class="checkout-detail__icon">📅</span> {{ $match->match_date->format('l, F j, Y') }}</span>
+                    <span class="checkout-detail"><span class="checkout-detail__icon">🕐</span> {{ $match->match_time }}</span>
+                    <span class="checkout-detail"><span class="checkout-detail__icon">📍</span> {{ $match->city }}</span>
+                    @if ($match->tickets_available !== null)
+                        <span class="checkout-detail"><span class="checkout-detail__icon">🎟</span> {{ $match->ticketsRemaining() }} left</span>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </header>
 
-                @if ($match->tickets_available !== null)
-                    <p style="margin-top:10px;font-size:13px;color:#676767;">{{ $match->ticketsRemaining() }} tickets left for this match.</p>
-                @endif
+    <div class="checkout-body">
+        <div class="checkout-shell">
+            @if (session('error'))
+                <div class="checkout-alert">{{ session('error') }}</div>
+            @endif
 
-                <button class="pay-btn" type="submit">
-                    Continue to payment — From ${{ number_format($match->price_from) }}
-                </button>
-            </form>
+            <div class="checkout-grid">
+                <div class="checkout-panel">
+                    <div class="checkout-panel__head">Order summary</div>
+                    <div class="checkout-panel__body">
+                        <div class="checkout-summary-row">
+                            <strong>{{ $match->matchupTitle() }}</strong>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Stage</span>
+                            <strong>{{ $match->stageLabel() }}</strong>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Venue</span>
+                            <strong>{{ $match->venue }}</strong>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Date & time</span>
+                            <strong>{{ $match->formattedDate() }}</strong>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Price per ticket</span>
+                            <strong>${{ number_format($unitPrice) }}</strong>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Quantity</span>
+                            <strong id="summary-qty">1</strong>
+                        </div>
+                        <div class="checkout-summary-total">
+                            <div>
+                                Total
+                                <small>Taxes & fees included</small>
+                            </div>
+                            <strong id="summary-total">${{ number_format($unitPrice) }}</strong>
+                        </div>
+                    </div>
+                </div>
 
-            <p style="margin-top:14px;font-size:13px;color:#676767;">
-                @if (config('services.stripe.secret'))
-                    You will be redirected to Stripe to complete payment securely.
-                @else
-                    Demo mode: payment will be recorded instantly without Stripe keys.
-                @endif
-            </p>
+                <div class="checkout-panel">
+                    <div class="checkout-panel__head">Complete your purchase</div>
+                    <div class="checkout-panel__body">
+                        <form method="post" action="{{ route('checkout.pay', $match) }}" class="checkout-form" id="checkout-form">
+                            @csrf
+
+                            @if ($match->tickets_available !== null)
+                                <p class="checkout-stock">Only {{ $match->ticketsRemaining() }} tickets remaining — secure yours now.</p>
+                            @endif
+
+                            <label>How many tickets?</label>
+                            <div class="checkout-qty" id="qty-picker">
+                                @for ($i = 1; $i <= $maxQuantity; $i++)
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            name="quantity"
+                                            id="qty-{{ $i }}"
+                                            value="{{ $i }}"
+                                            @checked($i === 1)
+                                            data-total="{{ $unitPrice * $i }}"
+                                        />
+                                        <label for="qty-{{ $i }}">
+                                            {{ $i }}
+                                            <small>${{ number_format($unitPrice * $i) }}</small>
+                                        </label>
+                                    </div>
+                                @endfor
+                            </div>
+
+                            <button class="checkout-pay-btn" type="submit" id="pay-btn">
+                                Continue to secure payment
+                            </button>
+
+                            <div class="checkout-secure">
+                                @if (config('services.stripe.secret'))
+                                    <span>🔒 Stripe secure checkout</span>
+                                    <span>🛡 Every ticket protected</span>
+                                @else
+                                    <span>⚡ Demo mode — instant confirmation</span>
+                                @endif
+                            </div>
+                        </form>
+
+                        <div class="checkout-trust" style="margin-top:22px;">
+                            <div class="checkout-trust-item">
+                                <div class="checkout-trust-item__icon">✓</div>
+                                <div>
+                                    <strong>Official match tickets</strong>
+                                    <span>Verified listings for {{ $match->venue }} with instant order confirmation.</span>
+                                </div>
+                            </div>
+                            <div class="checkout-trust-item">
+                                <div class="checkout-trust-item__icon">⚡</div>
+                                <div>
+                                    <strong>Fast digital delivery</strong>
+                                    <span>Tickets appear in your GoalPass wallet right after payment.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+(() => {
+    const unitPrice = {{ $unitPrice }};
+    const qtyInputs = document.querySelectorAll('#qty-picker input[name="quantity"]');
+    const summaryQty = document.getElementById('summary-qty');
+    const summaryTotal = document.getElementById('summary-total');
+    const payBtn = document.getElementById('pay-btn');
+
+    const formatMoney = (n) => '$' + n.toLocaleString('en-US');
+
+    const update = () => {
+        const selected = document.querySelector('#qty-picker input[name="quantity"]:checked');
+        if (!selected) return;
+        const qty = parseInt(selected.value, 10);
+        const total = unitPrice * qty;
+        summaryQty.textContent = qty;
+        summaryTotal.textContent = formatMoney(total);
+        payBtn.textContent = `Continue to secure payment — ${formatMoney(total)}`;
+    };
+
+    qtyInputs.forEach((input) => input.addEventListener('change', update));
+    update();
+})();
+</script>
+@endpush

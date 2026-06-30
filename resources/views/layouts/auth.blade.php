@@ -13,6 +13,21 @@
         p { margin: 0 0 20px; color: #5c6b7f; font-size: 14px; }
         label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
         input { width: 100%; padding: 11px 12px; border: 1px solid #d9e2ec; border-radius: 10px; font: inherit; margin-bottom: 14px; }
+        .password-field { margin-bottom: 14px; }
+        .password-field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .password-field__wrap { position: relative; }
+        .password-field__wrap input { margin-bottom: 0; padding-right: 44px; }
+        .password-field__toggle {
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            display: grid; place-items: center; width: 34px; height: 34px;
+            border: 0; border-radius: 8px; background: transparent; color: #5c6b7f;
+            cursor: pointer; transition: color .15s ease, background .15s ease;
+        }
+        .password-field__toggle:hover { color: #102033; background: #f4f6f8; }
+        .password-field__icon { display: block; }
+        .password-field__icon--hide { display: none; }
+        .password-field__toggle.is-visible .password-field__icon--show { display: none; }
+        .password-field__toggle.is-visible .password-field__icon--hide { display: block; }
         .btn { width: 100%; border: 0; border-radius: 12px; padding: 12px; background: #181818; color: #fff; font-weight: 800; cursor: pointer; }
         .link { color: #0b5fff; text-decoration: none; font-size: 14px; }
         .error { color: #c62828; font-size: 13px; margin-bottom: 12px; }
