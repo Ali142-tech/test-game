@@ -68,7 +68,8 @@ return [
         'sold_out' => 'Agotado',
         'from_price' => 'Desde $:price',
         'pay' => 'Pagar',
-        'pay_from' => 'Pagar · Desde $:price',
+        'buy_ticket' => 'Comprar entrada',
+        'buy_ticket_price' => 'Desde $:price',
         'tba' => 'Por confirmar',
     ],
 

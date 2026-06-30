@@ -189,10 +189,12 @@ img { display: block; max-width: 100%; }
 .match-card__title { display: block; font-size: 20px; line-height: 1.2; margin-bottom: 6px; }
 .match-card__venue { display: block; color: var(--muted); font-size: 14px; }
 .match-card__btn {
-    display: inline-flex; align-items: center; justify-content: center; min-width: 100px;
-    padding: 12px 22px; border-radius: 999px; background: #181818; color: #fff;
-    font-weight: 800; font-size: 15px; white-space: nowrap; letter-spacing: .02em;
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    min-width: 118px; padding: 11px 16px; border-radius: 999px; background: #181818; color: #fff;
+    font-weight: 800; white-space: nowrap; line-height: 1.15; text-align: center;
 }
+.match-card__btn-label { font-size: 14px; letter-spacing: .02em; }
+.match-card__btn-price { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.75); }
 .match-card__btn:hover { background: #333; }
 .match-card__btn--disabled { background: #d0d0d0; color: #666; pointer-events: none; }
 .matches-empty {

@@ -68,7 +68,8 @@ return [
         'sold_out' => 'Sold out',
         'from_price' => 'From $:price',
         'pay' => 'Pay',
-        'pay_from' => 'Pay · From $:price',
+        'buy_ticket' => 'Buy Ticket',
+        'buy_ticket_price' => 'From $:price',
         'tba' => 'TBA',
     ],
 
