@@ -89,13 +89,13 @@ class CheckoutController extends Controller
 
         Stripe::setApiKey($stripeSecret);
 
+        $successUrl = route('checkout.success', ['order' => $order->id])
+            .'?session_id={CHECKOUT_SESSION_ID}';
+
         $session = Session::create([
             'mode' => 'payment',
             'customer_email' => $request->user()->email,
-            'success_url' => route('checkout.success', [
-                'order' => $order->id,
-                'session_id' => '{CHECKOUT_SESSION_ID}',
-            ]),
+            'success_url' => $successUrl,
             'cancel_url' => route('checkout.show', $worldCupMatch),
             'line_items' => [[
                 'quantity' => 1,
@@ -132,6 +132,12 @@ class CheckoutController extends Controller
 
         $stripeSecret = config('services.stripe.secret');
         $sessionId = $request->query('session_id');
+
+        if ($sessionId && str_contains($sessionId, '{')) {
+            $sessionId = null;
+        }
+
+        $sessionId ??= $order->stripe_session_id;
 
         if ($stripeSecret && $sessionId) {
             Stripe::setApiKey($stripeSecret);
