@@ -26,7 +26,7 @@
                 <a href="/" class="checkout-nav__brand">GOALPASS</a>
                 <div style="display:flex;gap:16px;">
                     <a href="/#schedule">← Matches</a>
-                    <a href="{{ route('dashboard') }}">My tickets</a>
+                    <a href="{{ route('user.tickets') }}">My tickets</a>
                 </div>
             </nav>
 

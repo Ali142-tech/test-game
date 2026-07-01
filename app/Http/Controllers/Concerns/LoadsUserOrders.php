@@ -1,33 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Concerns;
 
 use App\Models\TicketOrder;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Support\Collection;
 
-class DashboardController extends Controller
+trait LoadsUserOrders
 {
-    public function __invoke(): View|RedirectResponse
+    protected function userOrders(): Collection
     {
-        if (auth()->user()->isAdmin()) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        $orders = TicketOrder::with('worldCupMatch')
+        return TicketOrder::with('worldCupMatch')
             ->where('user_id', auth()->id())
             ->latest()
             ->get();
+    }
 
+    /**
+     * @return array{tickets: int, spent: float, orders: int, upcoming: int}
+     */
+    protected function userStats(Collection $orders): array
+    {
         $paidOrders = $orders->where('status', 'paid');
 
-        $stats = [
+        return [
             'tickets' => $paidOrders->sum('quantity'),
             'spent' => $paidOrders->sum('amount') / 100,
             'orders' => $orders->count(),
             'upcoming' => $paidOrders->filter(fn ($o) => $o->worldCupMatch?->match_date?->isFuture())->count(),
         ];
+    }
 
+    /**
+     * @return array{labels: list<string>, values: list<int>, max: int}
+     */
+    protected function userActivityData(Collection $orders): array
+    {
         $activityBuckets = collect(range(5, 0))->map(function ($monthsAgo) use ($orders) {
             $monthStart = now()->subMonths($monthsAgo)->startOfMonth();
             $monthKey = $monthStart->format('Y-m');
@@ -36,16 +43,13 @@ class DashboardController extends Controller
             return [
                 'label' => $monthStart->format('M'),
                 'tickets' => $monthOrders->sum('quantity'),
-                'orders' => $monthOrders->count(),
             ];
         });
 
-        $activityData = [
+        return [
             'labels' => $activityBuckets->pluck('label')->all(),
             'values' => $activityBuckets->pluck('tickets')->all(),
             'max' => max($activityBuckets->pluck('tickets')->all() ?: [1]),
         ];
-
-        return view('dashboard', compact('orders', 'stats', 'activityData'));
     }
 }

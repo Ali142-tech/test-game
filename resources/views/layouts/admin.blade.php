@@ -194,6 +194,10 @@
         }
         .badge--paid { background: var(--good-soft); color: var(--good); }
         .badge--pending { background: var(--warn-soft); color: var(--warn); }
+        .badge--delivered { background: var(--good-soft); color: var(--good); }
+        .badge--delivery-pending { background: var(--warn-soft); color: var(--warn); }
+        .badge--rejected { background: #fef2f2; color: var(--danger); }
+        .badge--refunded { background: #f3e8ff; color: #7c3aed; }
         .badge--draft { background: #f3f4f6; color: #6b7280; }
         .badge--published { background: var(--brand-soft); color: var(--brand); }
         .badge--soldout { background: #fef2f2; color: var(--danger); }
@@ -256,7 +260,7 @@
             <nav class="admin-nav">
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Dashboard</a>
                 <a href="{{ route('admin.matches.index') }}" class="{{ request()->routeIs('admin.matches.*') ? 'is-active' : '' }}">Matches</a>
-                <a href="{{ route('admin.tickets.index') }}" class="{{ request()->routeIs('admin.tickets.*') ? 'is-active' : '' }}">Ticket orders</a>
+                <a href="{{ route('admin.tickets.index') }}" class="{{ request()->routeIs('admin.tickets.*') ? 'is-active' : '' }}">Tickets</a>
                 <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Users</a>
                 <a href="{{ route('admin.matches.create') }}">Add match</a>
             </nav>

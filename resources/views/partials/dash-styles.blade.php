@@ -21,6 +21,19 @@
     .dash-head__actions .btn--ghost { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
     .dash-head--user .dash-head__actions .btn { color: #4338ca; }
 
+    .dash-quick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .dash-quick__card {
+        display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto auto;
+        gap: 2px 12px; align-items: center; padding: 16px 18px; border-radius: 14px;
+        background: var(--panel); border: 1px solid var(--line); color: inherit;
+        box-shadow: 0 4px 16px rgba(15,23,42,.04); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .dash-quick__card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,.08); border-color: var(--brand); }
+    .dash-quick__icon { grid-row: 1 / -1; font-size: 28px; line-height: 1; }
+    .dash-quick__label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .dash-quick__value { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+    .dash-quick__hint { font-size: 12px; color: var(--muted); font-weight: 500; }
+
     .dash-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
     .dash-stat {
         background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
@@ -117,6 +130,9 @@
     .dash-ticket:hover { box-shadow: 0 8px 24px rgba(15,23,42,.08); transform: translateY(-1px); }
     .dash-ticket__stripe { background: linear-gradient(180deg, #6366f1, #2563eb); }
     .dash-ticket__stripe--pending { background: linear-gradient(180deg, #f59e0b, #d97706); }
+    .dash-ticket__stripe--delivered { background: linear-gradient(180deg, #22c55e, #16a34a); }
+    .dash-ticket__stripe--rejected { background: linear-gradient(180deg, #ef4444, #dc2626); }
+    .dash-ticket__stripe--delivery-pending { background: linear-gradient(180deg, #8b5cf6, #6366f1); }
     .dash-ticket__body { padding: 14px 0; min-width: 0; }
     .dash-ticket__stage { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 4px; }
     .dash-ticket__title { font-size: 14px; font-weight: 800; line-height: 1.25; margin-bottom: 6px; letter-spacing: -.01em; }
@@ -124,6 +140,28 @@
     .dash-ticket__side { padding: 14px 14px 14px 0; text-align: right; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 4px; }
     .dash-ticket__price { font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
     .dash-ticket__qty { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .dash-ticket__badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .dash-ticket__note {
+        margin-top: 10px; padding: 10px 12px; border-radius: 10px;
+        background: #fef2f2; border: 1px solid #fecaca; font-size: 12px; line-height: 1.5; color: #991b1b;
+    }
+    .dash-ticket__note strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+
+    .dash-orders { padding: 0 16px 16px; overflow-x: auto; }
+    .dash-orders table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .dash-orders th {
+        text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 800;
+        text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+        border-bottom: 1px solid var(--line);
+    }
+    .dash-orders td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .dash-orders tr:last-child td { border-bottom: 0; }
+    .dash-orders__match strong { display: block; font-weight: 800; margin-bottom: 4px; }
+    .dash-orders__match span { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .dash-orders__note {
+        margin-top: 6px; padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.45;
+        background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; max-width: 280px;
+    }
 
     .dash-empty {
         padding: 36px 24px; text-align: center; margin: 14px 16px 16px;
@@ -142,6 +180,7 @@
     }
     @media (max-width: 900px) {
         .dash-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .dash-quick { grid-template-columns: 1fr; }
         .dash-mid, .dash-bottom { grid-template-columns: 1fr; }
     }
 </style>

@@ -79,12 +79,16 @@ class CheckoutController extends Controller
         if (! $stripeSecret) {
             $order->update([
                 'status' => 'paid',
+                'delivery_status' => TicketOrder::DELIVERY_PENDING,
                 'payment_reference' => 'demo-'.uniqid(),
             ]);
 
             return redirect()
                 ->route('dashboard')
-                ->with(Notify::success('Demo payment complete — your tickets are in your wallet.', 'Tickets booked'));
+                ->with(Notify::success(
+                    'Payment successful! Your World Cup tickets will be delivered to you within 2 days.',
+                    'Tickets booked'
+                ));
         }
 
         Stripe::setApiKey($stripeSecret);
@@ -147,6 +151,9 @@ class CheckoutController extends Controller
 
         return redirect()
             ->route('dashboard')
-            ->with(Notify::success('Payment successful! Your World Cup tickets are ready in your wallet.', 'Tickets booked'));
+            ->with(Notify::success(
+                'Payment successful! Your World Cup tickets will be delivered to you within 2 days.',
+                'Tickets booked'
+            ));
     }
 }

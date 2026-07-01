@@ -3,9 +3,10 @@
 @section('title', 'Sign in')
 
 @section('content')
-    <div class="auth-card__eyebrow">GoalPass · World Cup 2026</div>
-    <h1>Welcome back</h1>
-    <p class="auth-card__lead">Sign in to access your tickets and buy World Cup matches.</p>
+    <div class="auth-card__icon" aria-hidden="true">⚽</div>
+    <div class="auth-card__eyebrow">World Cup 2026 · Ticket access</div>
+    <h1>Welcome back, fan</h1>
+    <p class="auth-card__lead">Sign in to grab knockout tickets and manage your match-day passes.</p>
 
     <nav class="auth-tabs" aria-label="Account type">
         <a href="{{ route('login', request()->only('redirect')) }}" class="is-active">Sign in</a>
@@ -41,6 +42,6 @@
         </label>
 
         <button class="auth-btn" type="submit" data-loading-text="Signing in...">Sign in</button>
-        <p class="auth-trust">🔒 Secure login · Stripe checkout on ticket purchases</p>
+        <p class="auth-trust">🔒 Secure checkout · Tickets delivered within 2 days</p>
     </form>
 @endsection

@@ -82,6 +82,112 @@ return [
         'copy' => '© :year GoalPass — FIFA World Cup 2026 tickets.',
     ],
 
+    'pages' => [
+        'about' => [
+            'title' => 'About GoalPass',
+            'description' => 'The trusted way to browse and buy FIFA World Cup 2026 match tickets.',
+            'sections' => [
+                [
+                    'heading' => 'Who we are',
+                    'paragraphs' => [
+                        'GoalPass is a ticket marketplace built for the FIFA World Cup 2026 in the United States, Canada, and Mexico. We help fans discover knockout matches, compare prices, and complete secure checkout.',
+                    ],
+                ],
+                [
+                    'heading' => 'What we offer',
+                    'paragraphs' => [],
+                    'list' => [
+                        'Live schedule of published World Cup matches',
+                        'Secure Stripe checkout for ticket purchases',
+                        'Personal ticket wallet and order tracking',
+                        'Delivery updates within 2 days of payment',
+                    ],
+                ],
+            ],
+        ],
+        'help' => [
+            'title' => 'Help & support',
+            'description' => 'Answers to common questions about buying and receiving World Cup tickets.',
+            'sections' => [
+                [
+                    'heading' => 'Buying tickets',
+                    'paragraphs' => [
+                        'Sign in or create a free account, browse the match schedule on the homepage, and click Buy Ticket on any available fixture. You will be redirected to secure payment via Stripe.',
+                    ],
+                ],
+                [
+                    'heading' => 'After you pay',
+                    'paragraphs' => [
+                        'Paid orders appear in My tickets and Order history on your dashboard. Tickets are typically delivered to your wallet within 2 business days. You can track delivery status on the Order history page.',
+                    ],
+                ],
+                [
+                    'heading' => 'Need more help?',
+                    'paragraphs' => [
+                        'Check the FAQ section on our homepage for pricing, seating categories, and tournament dates.',
+                    ],
+                ],
+            ],
+        ],
+        'privacy' => [
+            'title' => 'Privacy policy',
+            'description' => 'How GoalPass collects and uses your information.',
+            'sections' => [
+                [
+                    'heading' => 'Information we collect',
+                    'paragraphs' => [
+                        'When you register we collect your name, email, and phone number. When you purchase tickets we store order details, payment status, and delivery information. Payments are processed by Stripe; we do not store full card numbers.',
+                    ],
+                ],
+                [
+                    'heading' => 'How we use your data',
+                    'paragraphs' => [],
+                    'list' => [
+                        'To create and manage your account',
+                        'To process ticket orders and show order history',
+                        'To communicate delivery or rejection status on your tickets',
+                    ],
+                ],
+            ],
+        ],
+        'terms' => [
+            'title' => 'Terms of service',
+            'description' => 'Rules for using GoalPass to buy World Cup tickets.',
+            'sections' => [
+                [
+                    'heading' => 'Using GoalPass',
+                    'paragraphs' => [
+                        'You must provide accurate registration details. Ticket listings reflect availability at time of purchase. All sales are subject to match scheduling changes announced by FIFA or host organizers.',
+                    ],
+                ],
+                [
+                    'heading' => 'Payments & delivery',
+                    'paragraphs' => [
+                        'Completed payments are marked as paid in your account. Ticket delivery status (pending, delivered, or rejected) is shown in your order history. If a ticket is rejected, you will see an admin note explaining why.',
+                    ],
+                ],
+            ],
+        ],
+        'sell' => [
+            'title' => 'Sell tickets',
+            'description' => 'List your World Cup tickets on GoalPass.',
+            'sections' => [
+                [
+                    'heading' => 'Coming soon',
+                    'paragraphs' => [
+                        'GoalPass is currently focused on helping fans buy official match tickets. Seller listings for the 2026 World Cup will open in a future release.',
+                    ],
+                ],
+                [
+                    'heading' => 'Get notified',
+                    'paragraphs' => [
+                        'Create a free account today so you are ready when seller tools launch. In the meantime, browse the schedule to buy tickets for upcoming matches.',
+                    ],
+                ],
+            ],
+        ],
+    ],
+
     'stages' => [
         'group-stage' => [
             'label' => 'FIFA World Cup Group Stage',

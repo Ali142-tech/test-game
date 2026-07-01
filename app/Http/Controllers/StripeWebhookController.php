@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TicketOrder;
 use App\Services\StripeCheckoutFulfillment;
+use App\Services\StripeRefundService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -11,8 +13,11 @@ use Stripe\Webhook;
 
 class StripeWebhookController extends Controller
 {
-    public function __invoke(Request $request, StripeCheckoutFulfillment $fulfillment): JsonResponse
-    {
+    public function __invoke(
+        Request $request,
+        StripeCheckoutFulfillment $fulfillment,
+        StripeRefundService $refunds,
+    ): JsonResponse {
         $webhookSecret = config('services.stripe.webhook_secret');
 
         if (! $webhookSecret) {
@@ -45,8 +50,39 @@ class StripeWebhookController extends Controller
             case 'checkout.session.async_payment_succeeded':
                 $fulfillment->fulfillFromSession($event->data->object);
                 break;
+
+            case 'charge.refunded':
+                $this->syncChargeRefunded($event->data->object);
+                break;
+
+            case 'refund.updated':
+                $refunds->syncFromRefund($event->data->object);
+                break;
         }
 
         return response()->json(['received' => true]);
+    }
+
+    private function syncChargeRefunded(object $charge): void
+    {
+        $paymentIntent = $charge->payment_intent ?? null;
+
+        if (! $paymentIntent) {
+            return;
+        }
+
+        $order = TicketOrder::query()
+            ->where('payment_reference', $paymentIntent)
+            ->first();
+
+        if (! $order) {
+            return;
+        }
+
+        $order->update([
+            'status' => TicketOrder::STATUS_REFUNDED,
+            'refund_status' => StripeRefundService::REFUND_SUCCEEDED,
+            'refunded_at' => $order->refunded_at ?? now(),
+        ]);
     }
 }

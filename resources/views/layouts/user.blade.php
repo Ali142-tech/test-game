@@ -124,6 +124,10 @@
         }
         .badge--paid { background: var(--good-soft); color: var(--good); }
         .badge--pending { background: var(--warn-soft); color: var(--warn); }
+        .badge--delivered { background: var(--good-soft); color: var(--good); }
+        .badge--delivery-pending { background: var(--warn-soft); color: var(--warn); }
+        .badge--rejected { background: #fef2f2; color: var(--danger); }
+        .badge--refunded { background: #f3e8ff; color: #7c3aed; }
         .badge--published { background: var(--brand-soft); color: var(--brand); }
         .badge--draft { background: #f3f4f6; color: #6b7280; }
         .badge--soldout { background: #fef2f2; color: var(--danger); }
@@ -154,7 +158,9 @@
             </div>
 
             <nav class="user-nav">
-                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'is-active' : '' }}">My tickets</a>
+                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'is-active' : '' }}">Overview</a>
+                <a href="{{ route('user.tickets') }}" class="{{ request()->routeIs('user.tickets') ? 'is-active' : '' }}">My tickets</a>
+                <a href="{{ route('user.orders') }}" class="{{ request()->routeIs('user.orders') ? 'is-active' : '' }}">Order history</a>
                 <a href="/#schedule">Browse matches</a>
             </nav>
 

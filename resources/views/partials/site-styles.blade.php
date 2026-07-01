@@ -42,6 +42,7 @@ img { display: block; max-width: 100%; }
     display: flex; align-items: center; gap: 10px; flex: 1; min-width: 180px; max-width: 420px;
     background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
     border-radius: 999px; padding: 9px 14px; color: rgba(255,255,255,.62); font-size: 14px;
+    text-decoration: none; cursor: pointer;
 }
 .site-header__actions { display: flex; align-items: center; gap: 14px; margin-inline-start: auto; font-size: 13px; color: rgba(255,255,255,.85); }
 .site-header__signin {

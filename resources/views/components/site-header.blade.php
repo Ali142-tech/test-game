@@ -3,7 +3,7 @@
     $localeLabels = config('locales.labels', []);
     $currentLabel = $localeLabels[$locale] ?? strtoupper($locale);
     $dashboardUrl = auth()->check()
-        ? (auth()->user()->isAdmin() ? route('admin.dashboard') : route('dashboard'))
+        ? (auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.tickets'))
         : route('login');
     $dashboardLabel = auth()->check()
         ? (auth()->user()->isAdmin() ? __('site.header.admin') : __('site.header.my_tickets'))
@@ -14,10 +14,10 @@
     <div class="site-header__inner">
         <a href="/" class="site-header__brand">GOALPASS</a>
 
-        <div class="site-header__search" role="search">
+        <a href="/#schedule" class="site-header__search" role="search">
             <span class="site-header__search-icon" aria-hidden="true">⌕</span>
             <span class="site-header__search-placeholder">{{ __('site.header.search_placeholder') }}</span>
-        </div>
+        </a>
 
         <div class="site-header__actions">
             <div class="lang-dropdown">
@@ -40,8 +40,8 @@
                     @endforeach
                 </div>
             </div>
-            <a href="#" class="site-header__link">{{ __('site.header.sell') }}</a>
-            <a href="#" class="site-header__link">{{ __('site.header.support') }}</a>
+            <a href="{{ route('pages.sell') }}" class="site-header__link">{{ __('site.header.sell') }}</a>
+            <a href="{{ route('pages.help') }}" class="site-header__link">{{ __('site.header.support') }}</a>
             <a href="{{ $dashboardUrl }}" class="site-header__signin">{{ $dashboardLabel }}</a>
         </div>
     </div>

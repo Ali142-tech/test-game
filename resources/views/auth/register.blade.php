@@ -5,9 +5,10 @@
 @section('card_class', 'auth-card--wide')
 
 @section('content')
-    <div class="auth-card__eyebrow">Join GoalPass</div>
-    <h1>Create account</h1>
-    <p class="auth-card__lead">Register once, then buy and manage World Cup 2026 tickets anytime.</p>
+    <div class="auth-card__icon" aria-hidden="true">🏟️</div>
+    <div class="auth-card__eyebrow">Join the GoalPass squad</div>
+    <h1>Create your fan account</h1>
+    <p class="auth-card__lead">One account for every World Cup match — buy tickets and track delivery in your wallet.</p>
 
     <nav class="auth-tabs" aria-label="Account type">
         <a href="{{ route('login', request()->only('redirect')) }}">Sign in</a>
@@ -55,6 +56,6 @@
         <x-password-input id="password_confirmation" name="password_confirmation" label="Confirm password" autocomplete="new-password" placeholder="Repeat password" />
 
         <button class="auth-btn" type="submit" data-loading-text="Creating account...">Create account</button>
-        <p class="auth-trust">🛡 Every ticket protected on GoalPass</p>
+        <p class="auth-trust">🛡 Every ticket protected · Official match listings</p>
     </form>
 @endsection

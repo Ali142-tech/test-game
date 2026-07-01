@@ -41,7 +41,8 @@ class StripeCheckoutFulfillment
             }
 
             $order->update([
-                'status' => 'paid',
+                'status' => TicketOrder::STATUS_PAID,
+                'delivery_status' => TicketOrder::DELIVERY_PENDING,
                 'payment_reference' => $session->payment_intent,
                 'stripe_session_id' => $session->id,
             ]);

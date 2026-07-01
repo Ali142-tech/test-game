@@ -162,7 +162,7 @@
             </tbody>
         </table>
 
-        <div class="faq-list">
+        <div class="faq-list" id="faq">
             @foreach ($faqs as $index => $faq)
                 <x-faq-item :question="$faq['question']" :answer="$faq['answer']" :open="$index === 0" />
             @endforeach

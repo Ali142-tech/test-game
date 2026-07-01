@@ -8,14 +8,21 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/locale/{locale}', LocaleController::class)->name('locale.switch');
 
 Route::get('/', HomeController::class);
+
+Route::get('/about', [PageController::class, 'about'])->name('pages.about');
+Route::get('/help', [PageController::class, 'help'])->name('pages.help');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
+Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
+Route::get('/sell', [PageController::class, 'sell'])->name('pages.sell');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
@@ -29,7 +36,9 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/dashboard', [UserAccountController::class, 'dashboard'])->name('dashboard');
+    Route::get('/my-tickets', [UserAccountController::class, 'tickets'])->name('user.tickets');
+    Route::get('/orders', [UserAccountController::class, 'orders'])->name('user.orders');
     Route::get('/buy/{worldCupMatch}', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/buy/{worldCupMatch}', [CheckoutController::class, 'pay'])->name('checkout.pay');
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
@@ -44,5 +53,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/matches/{worldCupMatch}', [WorldCupMatchController::class, 'update'])->name('matches.update');
     Route::delete('/matches/{worldCupMatch}', [WorldCupMatchController::class, 'destroy'])->name('matches.destroy');
     Route::get('/tickets', [TicketOrderController::class, 'index'])->name('tickets.index');
+    Route::patch('/tickets/{ticketOrder}', [TicketOrderController::class, 'update'])->name('tickets.update');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 });

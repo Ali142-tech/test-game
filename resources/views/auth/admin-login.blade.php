@@ -3,9 +3,10 @@
 @section('title', 'Admin login')
 
 @section('content')
-    <div class="auth-card__eyebrow">Admin</div>
+    <div class="auth-card__icon" aria-hidden="true">🛠️</div>
+    <div class="auth-card__eyebrow">GoalPass admin</div>
     <h1>Admin sign in</h1>
-    <p class="auth-card__lead">Manage matches, pricing, and ticket sales.</p>
+    <p class="auth-card__lead">Manage World Cup matches, pricing, and ticket sales.</p>
 
     <form method="post" action="{{ route('admin.login') }}">
         @csrf
@@ -26,6 +27,6 @@
     </form>
 
     <p class="auth-trust" style="margin-top:20px">
-        <a href="{{ route('login') }}" style="color:#2563eb;font-weight:700;text-decoration:none">← User sign in</a>
+        <a href="{{ route('login') }}">← User sign in</a>
     </p>
 @endsection
