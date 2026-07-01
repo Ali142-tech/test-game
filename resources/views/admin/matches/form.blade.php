@@ -80,8 +80,9 @@
                 <input id="match_date" type="date" name="match_date" value="{{ old('match_date', optional($match->match_date)->format('Y-m-d')) }}" required />
             </div>
             <div class="field">
-                <label for="match_time">Time</label>
+                <label for="match_time">Time (stadium local)</label>
                 <input id="match_time" type="time" name="match_time" value="{{ $matchTimeInput }}" required />
+                <span class="muted" style="font-size:12px;display:block;margin-top:6px;">Kickoff time in the host city’s timezone (auto-detected from city).</span>
                 @error('match_time')<div style="color:#dc2626;font-size:13px;">{{ $message }}</div>@enderror
             </div>
         </div>

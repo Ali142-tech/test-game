@@ -77,7 +77,7 @@
                         <strong>{{ $match->matchupTitle() }}</strong><br>
                         <span class="muted">{{ $match->stage }}</span>
                     </td>
-                    <td>{{ $match->match_date->format('M j, Y') }}<br><span class="muted">{{ $match->match_time }}</span></td>
+                    <td>{{ $match->formattedVenueDateLong() }}<br><span class="muted">{{ $match->formattedVenueKickoff() }}</span></td>
                     <td>{{ $match->city }}</td>
                     <td>{{ $match->price_from ? '$'.number_format($match->price_from) : '—' }}</td>
                     <td>{{ $match->tickets_available !== null ? number_format($match->tickets_available) : '∞' }}</td>

@@ -185,7 +185,11 @@ img { display: block; max-width: 100%; }
 .match-card__flag--back { left: 0; top: 4px; z-index: 1; }
 .match-card__flag--front { left: 22px; top: 0; z-index: 2; }
 .match-card__datebox strong { display: block; font-size: 18px; line-height: 1.1; }
-.match-card__datebox span { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.match-card__datebox span, .match-card__kickoff { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.match-kickoff { display: grid; gap: 2px; }
+.match-kickoff__venue { display: block; }
+.match-kickoff__local { display: block; font-size: 12px; color: var(--muted); opacity: .92; }
+.checkout-detail--time .match-kickoff { display: inline-grid; text-align: left; }
 .match-card__stage { display: block; font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--muted); margin-bottom: 6px; }
 .match-card__title { display: block; font-size: 20px; line-height: 1.2; margin-bottom: 6px; }
 .match-card__venue { display: block; color: var(--muted); font-size: 14px; }

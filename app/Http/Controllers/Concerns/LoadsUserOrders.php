@@ -26,7 +26,7 @@ trait LoadsUserOrders
             'tickets' => $paidOrders->sum('quantity'),
             'spent' => $paidOrders->sum('amount') / 100,
             'orders' => $orders->count(),
-            'upcoming' => $paidOrders->filter(fn ($o) => $o->worldCupMatch?->match_date?->isFuture())->count(),
+            'upcoming' => $paidOrders->filter(fn ($o) => $o->worldCupMatch?->isUpcoming())->count(),
         ];
     }
 

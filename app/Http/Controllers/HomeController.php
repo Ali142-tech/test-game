@@ -20,7 +20,7 @@ class HomeController extends Controller
         $faqs = __('site.faqs');
         $winners = require resource_path('data/world-cup-winners.php');
 
-        $matches = WorldCupMatch::published()->ordered()->get();
+        $matches = WorldCupMatch::published()->upcoming()->ordered()->get();
 
         return view('welcome', compact(
             'teams',

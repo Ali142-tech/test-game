@@ -179,5 +179,6 @@
         </div>
     </div>
     @include('partials.submit-loader')
+    @include('partials.match-kickoff-script')
 </body>
 </html>

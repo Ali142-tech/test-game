@@ -30,7 +30,7 @@
                     <div class="dash-ticket__stage">{{ $match->stageLabel() }}</div>
                     <div class="dash-ticket__title">{{ $match->matchupTitle() }}</div>
                     <div class="dash-ticket__meta">
-                        {{ $match->formattedDayTime() }} · {{ $match->locationLine() }}<br>
+                        <x-match-kickoff :match="$match" :show-local="false" /> · {{ $match->locationLine() }}<br>
                         Order #{{ $order->id }} · {{ $order->created_at->format('M j, Y') }}
                     </div>
                     <div class="dash-ticket__badges">

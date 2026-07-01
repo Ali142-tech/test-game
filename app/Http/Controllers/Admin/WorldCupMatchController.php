@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\WorldCupMatch;
+use App\Support\MatchKickoff;
 use App\Support\Notify;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -87,6 +88,10 @@ class WorldCupMatchController extends Controller
         ];
 
         $data['match_time'] = Carbon::createFromFormat('H:i', $data['match_time'])->format('g:ia');
+
+        $kickoff = MatchKickoff::buildUtc($data['match_date'], $data['match_time'], $data['city']);
+        $data['starts_at'] = $kickoff['starts_at'];
+        $data['timezone'] = $kickoff['timezone'];
 
         return $data;
     }

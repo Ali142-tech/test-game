@@ -52,8 +52,11 @@
                 <h1>{{ $match->venue }}</h1>
                 <p>{{ $match->city }} · FIFA World Cup 2026</p>
                 <div class="checkout-details">
-                    <span class="checkout-detail"><span class="checkout-detail__icon">📅</span> {{ $match->match_date->format('l, F j, Y') }}</span>
-                    <span class="checkout-detail"><span class="checkout-detail__icon">🕐</span> {{ $match->match_time }}</span>
+                    <span class="checkout-detail"><span class="checkout-detail__icon">📅</span> {{ $match->formattedVenueDateLong() }}</span>
+                    <span class="checkout-detail checkout-detail--time">
+                        <span class="checkout-detail__icon">🕐</span>
+                        <x-match-kickoff :match="$match" />
+                    </span>
                     <span class="checkout-detail"><span class="checkout-detail__icon">📍</span> {{ $match->city }}</span>
                     @if ($match->tickets_available !== null)
                         <span class="checkout-detail"><span class="checkout-detail__icon">🎟</span> {{ $match->ticketsRemaining() }} left</span>

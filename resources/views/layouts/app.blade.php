@@ -12,6 +12,7 @@
     @include('partials.toasts')
     @yield('content')
     @stack('scripts')
+    @include('partials.match-kickoff-script')
     @include('partials.submit-loader')
 </body>
 </html>

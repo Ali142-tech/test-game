@@ -16,7 +16,7 @@
         </div>
         <div class="match-card__datebox">
             <strong>{{ $match->formattedShortDate() }}</strong>
-            <span>{{ $match->formattedDayTime() }}</span>
+            <x-match-kickoff :match="$match" class="match-card__kickoff" />
         </div>
     </div>
 

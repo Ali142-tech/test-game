@@ -37,7 +37,7 @@
                         <td class="dash-orders__match">
                             <strong>{{ $match->matchupTitle() }}</strong>
                             <span>{{ $match->stageLabel() }}</span>
-                            <span>{{ $match->formattedDayTime() }}</span>
+                            <x-match-kickoff :match="$match" :show-local="false" />
                             <span>{{ $match->locationLine() }}</span>
                         </td>
                         <td>{{ $order->quantity }}</td>

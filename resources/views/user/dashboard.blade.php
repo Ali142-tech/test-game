@@ -11,8 +11,8 @@
     $paidPct = $orders->count() > 0 ? round(($paidCount / $orders->count()) * 100) : 0;
     $pendingPct = 100 - $paidPct;
     $upcomingOrders = $paidOrders
-        ->filter(fn ($o) => $o->worldCupMatch?->match_date?->isFuture())
-        ->sortBy(fn ($o) => $o->worldCupMatch->match_date)
+        ->filter(fn ($o) => $o->worldCupMatch?->isUpcoming())
+        ->sortBy(fn ($o) => $o->worldCupMatch->kickoffAtUtc())
         ->take(3);
     $maxUpcomingQty = max($upcomingOrders->pluck('quantity')->map(fn ($v) => (int) $v)->all() ?: [1]);
 @endphp
@@ -128,7 +128,7 @@
                             <div class="dash-bar">
                                 <div class="dash-bar__name">
                                     {{ $match->matchupTitle() }}
-                                    <span>{{ $match->match_date->format('M j') }}</span>
+                                    <span>{{ $match->formattedShortDate() }}</span>
                                 </div>
                                 <div class="dash-bar__track">
                                     <div class="dash-bar__fill dash-bar__fill--user" style="width:{{ max(($order->quantity / max($maxUpcomingQty, 1)) * 100, 8) }}%"></div>
